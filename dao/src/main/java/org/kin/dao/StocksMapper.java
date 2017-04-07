@@ -1,13 +1,10 @@
 package org.kin.dao;
 
-import org.apache.ibatis.annotations.Mapper;
+import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.kin.domain.Stocks;
 import org.kin.domain.StocksExample;
 
-import java.util.List;
-
-@Mapper
 public interface StocksMapper {
     int countByExample(StocksExample example);
 
