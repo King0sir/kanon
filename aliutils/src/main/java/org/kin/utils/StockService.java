@@ -31,13 +31,214 @@ public class StockService extends BaseApiClient{
         return new StockService.Builder();
     }
 
-    public ApiResponse queryStockList(String market, String page) {
-        String path = "/stockindexsearch";
+    /**
+     * 股票列表查询
+     * @param market 股市列表: sh, sz, hk
+     * @param page 分页: 从 1 开始 第几页。每页最多返回50条记录
+     * @return
+     */
+    public ApiResponse stockList(String market, String page) {
+        String path = "/stocklist";
 
-        ApiRequest apiRequest = new ApiRequest(Scheme.HTTP, Method.GET, HOST, path);
+        ApiRequest apiRequest = new ApiRequest(Scheme.HTTPS, Method.GET, HOST, path);
 
         apiRequest.addQueryParam("market", String.valueOf(market));
         apiRequest.addQueryParam("page", String.valueOf(page));
+
+        return syncInvoke(apiRequest);
+    }
+
+    /**
+     * 沪深股票最新50条逐笔交易
+     * @param code 股票编码，比如000002，也可以使用拼音首字母。例如腾讯控股的是 txkg
+     * @return
+     */
+    public ApiResponse recentTrade(String code) {
+        String path = "/everytrade";
+
+        ApiRequest apiRequest = new ApiRequest(Scheme.HTTPS, Method.GET, HOST, path);
+
+        apiRequest.addQueryParam("code", String.valueOf(code));
+
+        return syncInvoke(apiRequest);
+    }
+
+    /**
+     * 股票实时分时线数据
+     * @param code  沪深和港股的股票编码，不需要写市场名称
+     * @param day  返回多少天的分时线数据，1代表的就是当天。目前支持1至5的范围。
+     * @return
+     */
+    public ApiResponse timeLine(String code, String day) {
+        String path = "/timeline";
+
+        ApiRequest apiRequest = new ApiRequest(Scheme.HTTPS, Method.GET, HOST, path);
+
+        apiRequest.addQueryParam("code", String.valueOf(code));
+        apiRequest.addQueryParam("day", String.valueOf(day));
+
+        return syncInvoke(apiRequest);
+    }
+
+    /**
+     * 股指列表查询
+     * @param market 市场简写。支持 sh、sz、hk
+     * @param page  第几页。每页最多返回50条记录
+     * @return
+     */
+    public ApiResponse stockIndexList(String market, String page) {
+        String path = "/stockindexsearch";
+
+        ApiRequest apiRequest = new ApiRequest(Scheme.HTTPS, Method.GET, HOST, path);
+
+        apiRequest.addQueryParam("market", String.valueOf(market));
+        apiRequest.addQueryParam("page", String.valueOf(page));
+
+        return syncInvoke(apiRequest);
+    }
+
+    /**
+     * 股票实时行情_批量
+     * @param stocks 是否需要返回股票指数。1为需要，0为不需要。
+     * @param needIndex 股票编码，需要带上市场名称。多个股票代码间以英文逗号分隔，最多输入200个代码。
+     */
+    public ApiResponse batchInfo(String stocks, String needIndex) {
+        String path = "/batch-real-stockinfo";
+
+        ApiRequest apiRequest = new ApiRequest(Scheme.HTTPS, Method.GET, HOST, path);
+
+        apiRequest.addQueryParam("stocks", String.valueOf(stocks));
+        apiRequest.addQueryParam("needIndex", String.valueOf(needIndex));
+
+        return syncInvoke(apiRequest);
+    }
+
+    /**
+     * 股指实时K线数据
+     * @param code 股指编码，不要写市场名，直接写
+     * @param time 查询的周期。 5 = 5分k线(默认) 30 = 30分k线 60 = 60分k线
+     *             day = 日k线 week = 周k线 month = 月k线 注意：港股股指只有day以上的K线。
+     * @param beginDay 开始时间，格式为yyyyMMdd，如果不写则默认是当天。结束时间永远是当前时间
+     */
+    public ApiResponse indexKline(String code, String time, String beginDay) {
+        String path = "/index-kline";
+
+        ApiRequest apiRequest = new ApiRequest(Scheme.HTTPS, Method.GET, HOST, path);
+
+        apiRequest.addQueryParam("code", String.valueOf(code));
+        apiRequest.addQueryParam("time", String.valueOf(time));
+        apiRequest.addQueryParam("beginDay", String.valueOf(beginDay));
+
+        return syncInvoke(apiRequest);
+    }
+
+    /**
+     * 股票实时K线数据
+     * @param code 沪深、港股股票编码
+     * @param time 5 = 5分k线(默认) ，30 = 30分k线，60 = 60分k线，day = 日k线，
+     *             week = 周k线，month = 月k线。注意港股不支持5分、30分和60分k线。
+     * @param beginDay 开始时间，格式为yyyyMMdd，如果不写则默认是当天。结束时间永远是当前时间
+     * @param type 复权方式，支持两种方式 。 bfq =不复权(默认方式) qfq =前复权。
+     *             当time为[day,week,month]时此字段有效。
+     */
+    public ApiResponse kline(String code, String time, String beginDay, String type) {
+        String path = "/realtime-k";
+
+        ApiRequest apiRequest = new ApiRequest(Scheme.HTTPS, Method.GET, HOST, path);
+
+        apiRequest.addQueryParam("code", String.valueOf(code));
+        apiRequest.addQueryParam("time", String.valueOf(time));
+        apiRequest.addQueryParam("beginDay", String.valueOf(beginDay));
+        apiRequest.addQueryParam("type", String.valueOf(type));
+
+        return syncInvoke(apiRequest);
+    }
+
+    /**
+     * 股指实时分时线
+     * @param code 股指编码，不需要写市场名称
+     * @param day 返回多少天的分时线数据，1代表的就是当天。
+     *            目前支持1至5的范围。 不写则默认1
+     */
+    public ApiResponse indexTimeLine(String code, String day) {
+        String path = "/index-timeline";
+
+        ApiRequest apiRequest = new ApiRequest(Scheme.HTTPS, Method.GET, HOST, path);
+
+        apiRequest.addQueryParam("code", String.valueOf(code));
+        apiRequest.addQueryParam("day", String.valueOf(day));
+
+        return syncInvoke(apiRequest);
+    }
+
+    /**
+     * 股指实时行情_批量
+     * @param stocks 股指编码以逗号分隔，
+     *               如果不写，则默认为sh000001,sz399001,sz399005,sz399006,hkhsi
+     */
+    public ApiResponse batchIndexInfo(String stocks) {
+        String path = "/stockIndex";
+
+        ApiRequest apiRequest = new ApiRequest(Scheme.HTTPS, Method.GET, HOST, path);
+
+        apiRequest.addQueryParam("stocks", String.valueOf(stocks));
+
+        return syncInvoke(apiRequest);
+    }
+
+    /**
+     * 名称编码拼音查询股票信息
+     * 股票行情，包括股票实时行情、指标、历史行情，可查询沪深股市、香港股市。
+     * @param code 比如002739,不需要输入市场编码。
+     *             支持模糊查询，至少输入3位code，系统返回匹配的前100条记录
+     * @param name 要查询的股票名称
+     * @param pinyin 拼音首字母，可前置模糊查询
+     */
+    public ApiResponse nameToInfo(String code, String name, String pinyin) {
+        String path = "/name-to-stockinfo";
+
+        ApiRequest apiRequest = new ApiRequest(Scheme.HTTPS, Method.GET, HOST, path);
+
+        apiRequest.addQueryParam("code", String.valueOf(code));
+        apiRequest.addQueryParam("name", String.valueOf(name));
+        apiRequest.addQueryParam("pinyin", String.valueOf(pinyin));
+
+        return syncInvoke(apiRequest);
+    }
+
+    /**
+     * 沪深及港股历史行情
+     * @param begin 开始日期，格式yyyy-MM-dd，最早的时间为2000-01-01日。属于未复权数据。
+     * @param end 结束日期，格式yyyy-MM-dd，注意时间范围为31天
+     * @param code 股票编码，不需要写市场名
+     */
+    public ApiResponse history(String begin, String end, String code) {
+        String path = "/sz-sh-stock-history";
+
+        ApiRequest apiRequest = new ApiRequest(Scheme.HTTPS, Method.GET, HOST, path);
+
+        apiRequest.addQueryParam("begin", String.valueOf(begin));
+        apiRequest.addQueryParam("end", String.valueOf(end));
+        apiRequest.addQueryParam("code", String.valueOf(code));
+
+        return syncInvoke(apiRequest);
+    }
+
+    /**
+     * 股票实时行情
+     * 根据股票代码获得行情，延时5秒左右。
+     * @param code 股票编码，比如000002，也可以使用拼音首字母。例如腾讯控股的是 txkg
+     * @param need_k_pic 是否需要返回k线图地址。1为需要，0为不需要。
+     * @param needIndex 是否需要返回指数信息。1为需要，0为不需要。
+     */
+    public ApiResponse info(String code, String need_k_pic, String needIndex) {
+        String path = "/real-stockinfo";
+
+        ApiRequest apiRequest = new ApiRequest(Scheme.HTTPS, Method.GET, HOST, path);
+
+        apiRequest.addQueryParam("code", String.valueOf(code));
+        apiRequest.addQueryParam("need_k_pic", String.valueOf(need_k_pic));
+        apiRequest.addQueryParam("needIndex", String.valueOf(needIndex));
 
         return syncInvoke(apiRequest);
     }

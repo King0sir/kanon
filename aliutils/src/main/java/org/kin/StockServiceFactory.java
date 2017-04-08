@@ -1,4 +1,4 @@
-package org.kin.utils.remote;
+package org.kin;
 
 import com.alibaba.cloudapi.sdk.core.model.ApiResponse;
 import org.kin.utils.StockService;
@@ -6,20 +6,21 @@ import org.kin.utils.StockService;
 /**
  * Created by kinakihiro on 2017/4/6.
  */
-public class StockRemoteService {
+public class StockServiceFactory {
 
-    private StockService syncClient = null;
+    private static StockService syncClient = null;
 
-    public StockRemoteService() {
-        this.syncClient = StockService.newBuilder()
+    private StockServiceFactory(){}
+
+    public static StockService createStockService(){
+        if(syncClient != null) {
+            return syncClient;
+        }
+        syncClient = StockService.newBuilder()
                 .appKey("23736483")
                 .appSecret("227780a6f677c46b771629ea75796df1")
                 .build();
-    }
-
-    public void queryStockList() {
-        ApiResponse response = syncClient.queryStockList("sh", "1");
-        printResponse(response);
+        return syncClient;
     }
 
     private static void printResponse(ApiResponse response) {
