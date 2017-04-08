@@ -8,6 +8,7 @@ import com.alibaba.cloudapi.sdk.core.enums.Scheme;
 import com.alibaba.cloudapi.sdk.core.model.ApiRequest;
 import com.alibaba.cloudapi.sdk.core.model.ApiResponse;
 import com.alibaba.cloudapi.sdk.core.model.BuilderParams;
+import org.kin.enums.StockMarket;
 
 /**
  * Created by kinakihiro on 2017/4/6.
@@ -37,12 +38,12 @@ public class StockService extends BaseApiClient{
      * @param page 分页: 从 1 开始 第几页。每页最多返回50条记录
      * @return
      */
-    public ApiResponse stockList(String market, String page) {
+    public ApiResponse stockList(StockMarket market, String page) {
         String path = "/stocklist";
 
         ApiRequest apiRequest = new ApiRequest(Scheme.HTTPS, Method.GET, HOST, path);
 
-        apiRequest.addQueryParam("market", String.valueOf(market));
+        apiRequest.addQueryParam("market", String.valueOf(market.getCode()));
         apiRequest.addQueryParam("page", String.valueOf(page));
 
         return syncInvoke(apiRequest);
@@ -86,12 +87,12 @@ public class StockService extends BaseApiClient{
      * @param page  第几页。每页最多返回50条记录
      * @return
      */
-    public ApiResponse stockIndexList(String market, String page) {
+    public ApiResponse stockIndexList(StockMarket market, String page) {
         String path = "/stockindexsearch";
 
         ApiRequest apiRequest = new ApiRequest(Scheme.HTTPS, Method.GET, HOST, path);
 
-        apiRequest.addQueryParam("market", String.valueOf(market));
+        apiRequest.addQueryParam("market", String.valueOf(market.getCode()));
         apiRequest.addQueryParam("page", String.valueOf(page));
 
         return syncInvoke(apiRequest);
