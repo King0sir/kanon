@@ -32,4 +32,13 @@ public enum StockMarket {
     public void setName(String name) {
         this.name = name;
     }
+
+    public static StockMarket getStockMarket(String code){
+        for(StockMarket type : values()){
+            if(type.getCode().equals(code)){
+                return type;
+            }
+        }
+        return null;
+    }
 }
