@@ -4,7 +4,7 @@
 <generatorConfiguration>
     <classPathEntry location="/Users/kinakihiro/.m2/repository/mysql/mysql-connector-java/5.1.41/mysql-connector-java-5.1.41.jar"/>
 
-    <context id="DB2Tables" targetRuntime="MyBatis3">
+    <context id="DB2Tables" defaultModelType="conditional" targetRuntime="MyBatis3">
         <commentGenerator>
             <property name="suppressAllComments" value="true"/>
         </commentGenerator>
@@ -33,7 +33,7 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
-        <table schema="" tableName="stocks" domainObjectName="Stocks">
+        <table schema="" tableName="stocks" domainObjectName="Stocks" enableCountByExample="true">
             <property name="useActualColumnNames" value="false"/>
         </table>
         <!--<table schema="" tableName="groups" domainObjectName="Groups">-->
