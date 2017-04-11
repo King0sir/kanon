@@ -10,6 +10,8 @@ import com.alibaba.cloudapi.sdk.core.model.ApiResponse;
 import com.alibaba.cloudapi.sdk.core.model.BuilderParams;
 import org.kin.enums.StockMarket;
 
+import java.util.List;
+
 /**
  * Created by kinakihiro on 2017/4/6.
  */
@@ -38,7 +40,7 @@ public class StockService extends BaseApiClient{
      * @param page 分页: 从 1 开始 第几页。每页最多返回50条记录
      * @return
      */
-    public ApiResponse stockList(StockMarket market, String page) {
+    public ApiResponse stockList(StockMarket market, int page) {
         String path = "/stocklist";
 
         ApiRequest apiRequest = new ApiRequest(Scheme.HTTPS, Method.GET, HOST, path);
@@ -70,7 +72,7 @@ public class StockService extends BaseApiClient{
      * @param day  返回多少天的分时线数据，1代表的就是当天。目前支持1至5的范围。
      * @return
      */
-    public ApiResponse timeLine(String code, String day) {
+    public ApiResponse timeLine(String code, int day) {
         String path = "/timeline";
 
         ApiRequest apiRequest = new ApiRequest(Scheme.HTTPS, Method.GET, HOST, path);
@@ -87,7 +89,7 @@ public class StockService extends BaseApiClient{
      * @param page  第几页。每页最多返回50条记录
      * @return
      */
-    public ApiResponse stockIndexList(StockMarket market, String page) {
+    public ApiResponse stockIndexList(StockMarket market, int page) {
         String path = "/stockindexsearch";
 
         ApiRequest apiRequest = new ApiRequest(Scheme.HTTPS, Method.GET, HOST, path);
@@ -100,16 +102,21 @@ public class StockService extends BaseApiClient{
 
     /**
      * 股票实时行情_批量
-     * @param stocks 是否需要返回股票指数。1为需要，0为不需要。
-     * @param needIndex 股票编码，需要带上市场名称。多个股票代码间以英文逗号分隔，最多输入200个代码。
+     * @param stockList 股票编码，需要带上市场名称。多个股票代码间以英文逗号分隔，最多输入200个代码。
+     * @param needIndex 是否需要返回股票指数。1为需要，0为不需要。
      */
-    public ApiResponse batchInfo(String stocks, String needIndex) {
+    public ApiResponse batchInfo(List<String> stockList, boolean needIndex) {
         String path = "/batch-real-stockinfo";
 
         ApiRequest apiRequest = new ApiRequest(Scheme.HTTPS, Method.GET, HOST, path);
 
-        apiRequest.addQueryParam("stocks", String.valueOf(stocks));
-        apiRequest.addQueryParam("needIndex", String.valueOf(needIndex));
+        StringBuilder stocks = new StringBuilder();
+        for(String stock : stockList){
+            stocks.append(stock);stocks.append(",");
+        }
+        stocks.deleteCharAt(stocks.lastIndexOf(","));
+        apiRequest.addQueryParam("stocks", stocks.toString());
+        apiRequest.addQueryParam("needIndex", needIndex?"1":"0");
 
         return syncInvoke(apiRequest);
     }
