@@ -8,6 +8,9 @@ import com.alibaba.cloudapi.sdk.core.enums.Scheme;
 import com.alibaba.cloudapi.sdk.core.model.ApiRequest;
 import com.alibaba.cloudapi.sdk.core.model.ApiResponse;
 import com.alibaba.cloudapi.sdk.core.model.BuilderParams;
+import org.joda.time.DateTime;
+import org.kin.enums.FuQuanType;
+import org.kin.enums.KLineTime;
 import org.kin.enums.StockMarket;
 
 import java.util.List;
@@ -128,14 +131,14 @@ public class StockService extends BaseApiClient{
      *             day = 日k线 week = 周k线 month = 月k线 注意：港股股指只有day以上的K线。
      * @param beginDay 开始时间，格式为yyyyMMdd，如果不写则默认是当天。结束时间永远是当前时间
      */
-    public ApiResponse indexKline(String code, String time, String beginDay) {
+    public ApiResponse indexKline(String code, KLineTime time, DateTime beginDay) {
         String path = "/index-kline";
 
         ApiRequest apiRequest = new ApiRequest(Scheme.HTTPS, Method.GET, HOST, path);
 
         apiRequest.addQueryParam("code", String.valueOf(code));
-        apiRequest.addQueryParam("time", String.valueOf(time));
-        apiRequest.addQueryParam("beginDay", String.valueOf(beginDay));
+        apiRequest.addQueryParam("time", String.valueOf(time.getCode()));
+        apiRequest.addQueryParam("beginDay", DateUtils.parseShortDate(beginDay));
 
         return syncInvoke(apiRequest);
     }
@@ -149,15 +152,15 @@ public class StockService extends BaseApiClient{
      * @param type 复权方式，支持两种方式 。 bfq =不复权(默认方式) qfq =前复权。
      *             当time为[day,week,month]时此字段有效。
      */
-    public ApiResponse kline(String code, String time, String beginDay, String type) {
+    public ApiResponse kline(String code, KLineTime time, DateTime beginDay, FuQuanType type) {
         String path = "/realtime-k";
 
         ApiRequest apiRequest = new ApiRequest(Scheme.HTTPS, Method.GET, HOST, path);
 
         apiRequest.addQueryParam("code", String.valueOf(code));
-        apiRequest.addQueryParam("time", String.valueOf(time));
-        apiRequest.addQueryParam("beginDay", String.valueOf(beginDay));
-        apiRequest.addQueryParam("type", String.valueOf(type));
+        apiRequest.addQueryParam("time", String.valueOf(time.getCode()));
+        apiRequest.addQueryParam("beginDay", DateUtils.parseShortDate(beginDay));
+        apiRequest.addQueryParam("type", String.valueOf(type.getCode()));
 
         return syncInvoke(apiRequest);
     }
