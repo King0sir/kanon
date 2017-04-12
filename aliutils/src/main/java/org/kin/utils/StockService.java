@@ -184,15 +184,19 @@ public class StockService extends BaseApiClient{
 
     /**
      * 股指实时行情_批量
-     * @param stocks 股指编码以逗号分隔，
+     * @param stockList 股指编码以逗号分隔，
      *               如果不写，则默认为sh000001,sz399001,sz399005,sz399006,hkhsi
      */
-    public ApiResponse batchIndexInfo(String stocks) {
+    public ApiResponse batchIndexInfo(List<String> stockList) {
         String path = "/stockIndex";
 
         ApiRequest apiRequest = new ApiRequest(Scheme.HTTPS, Method.GET, HOST, path);
+        StringBuilder stocks = new StringBuilder();
+        for(String stock : stockList){
+            stocks.append(stock);stocks.append(",");
+        }
 
-        apiRequest.addQueryParam("stocks", String.valueOf(stocks));
+        apiRequest.addQueryParam("stocks", stocks.toString());
 
         return syncInvoke(apiRequest);
     }
