@@ -171,7 +171,7 @@ public class StockService extends BaseApiClient{
      * @param day 返回多少天的分时线数据，1代表的就是当天。
      *            目前支持1至5的范围。 不写则默认1
      */
-    public ApiResponse indexTimeLine(String code, String day) {
+    public ApiResponse indexTimeLine(String code, int day) {
         String path = "/index-timeline";
 
         ApiRequest apiRequest = new ApiRequest(Scheme.HTTPS, Method.GET, HOST, path);
@@ -227,13 +227,13 @@ public class StockService extends BaseApiClient{
      * @param end 结束日期，格式yyyy-MM-dd，注意时间范围为31天
      * @param code 股票编码，不需要写市场名
      */
-    public ApiResponse history(String begin, String end, String code) {
+    public ApiResponse history(DateTime begin, DateTime end, String code) {
         String path = "/sz-sh-stock-history";
 
         ApiRequest apiRequest = new ApiRequest(Scheme.HTTPS, Method.GET, HOST, path);
 
-        apiRequest.addQueryParam("begin", String.valueOf(begin));
-        apiRequest.addQueryParam("end", String.valueOf(end));
+        apiRequest.addQueryParam("begin", DateUtils.parseDate(begin));
+        apiRequest.addQueryParam("end", DateUtils.parseDate(end));
         apiRequest.addQueryParam("code", String.valueOf(code));
 
         return syncInvoke(apiRequest);
@@ -243,17 +243,17 @@ public class StockService extends BaseApiClient{
      * 股票实时行情
      * 根据股票代码获得行情，延时5秒左右。
      * @param code 股票编码，比如000002，也可以使用拼音首字母。例如腾讯控股的是 txkg
-     * @param need_k_pic 是否需要返回k线图地址。1为需要，0为不需要。
+     * @param needKPicture 是否需要返回k线图地址。1为需要，0为不需要。
      * @param needIndex 是否需要返回指数信息。1为需要，0为不需要。
      */
-    public ApiResponse info(String code, String need_k_pic, String needIndex) {
+    public ApiResponse info(String code, boolean needKPicture, boolean needIndex) {
         String path = "/real-stockinfo";
 
         ApiRequest apiRequest = new ApiRequest(Scheme.HTTPS, Method.GET, HOST, path);
 
         apiRequest.addQueryParam("code", String.valueOf(code));
-        apiRequest.addQueryParam("need_k_pic", String.valueOf(need_k_pic));
-        apiRequest.addQueryParam("needIndex", String.valueOf(needIndex));
+        apiRequest.addQueryParam("need_k_pic", needKPicture?"1":"0");
+        apiRequest.addQueryParam("needIndex", needIndex?"1":"0");
 
         return syncInvoke(apiRequest);
     }
