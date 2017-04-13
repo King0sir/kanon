@@ -17,9 +17,5 @@ public class KanonApplication {
         SpringApplication.run(KanonApplication.class,args);
         System.out.println("application kanon start!");
 
-//        StocksExample example = new StocksExample();
-//        StocksExample.Criteria criteria = example.createCriteria();
-//        criteria.andNameEqualTo("abcv").andMarketNotLike("laksdjfklajsd");
-//        mapper.selectByExample(example);
     }
 }

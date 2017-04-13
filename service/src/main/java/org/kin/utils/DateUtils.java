@@ -11,11 +11,11 @@ import java.util.Date;
  */
 public class DateUtils {
 
-    public static DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-mm-dd HH:mm:ss");
+    public static DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
 
-    public static DateTimeFormatter formatterDate = DateTimeFormat.forPattern("yyyy-mm-dd");
+    public static DateTimeFormatter formatterDate = DateTimeFormat.forPattern("yyyy-MM-dd");
 
-    public static DateTimeFormatter formatterShortDate = DateTimeFormat.forPattern("yyyymmdd");
+    public static DateTimeFormatter formatterShortDate = DateTimeFormat.forPattern("yyyyMMdd");
 
     public static Date now(){
         return DateTime.now().toDate();
