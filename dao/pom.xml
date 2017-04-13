@@ -41,12 +41,12 @@
     </dependencies>
 
     <build>
-        <!--<plugins>-->
+        <plugins>
             <!--<plugin>-->
                 <!--<groupId>org.springframework.boot</groupId>-->
                 <!--<artifactId>spring-boot-maven-plugin</artifactId>-->
             <!--</plugin>-->
-            <!--
+            <!--&lt;!&ndash;-->
             <plugin>
                 <groupId>org.mybatis.generator</groupId>
                 <artifactId>mybatis-generator-maven-plugin</artifactId>
@@ -81,7 +81,7 @@
                     </dependency>
                 </dependencies>
             </plugin>
-            -->
-        <!--</plugins>-->
+            <!--&ndash;&gt;-->
+        </plugins>
     </build>
 </project>

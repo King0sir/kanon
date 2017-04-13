@@ -33,12 +33,12 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
-        <table schema="" tableName="stocks" domainObjectName="Stocks" enableCountByExample="true">
+        <table schema="" tableName="stocks" domainObjectName="Stocks">
             <property name="useActualColumnNames" value="false"/>
         </table>
-        <!--<table schema="" tableName="groups" domainObjectName="Groups">-->
-            <!--<property name="useActualColumnNames" value="false"/>-->
-        <!--</table>-->
+        <table schema="" tableName="stock_index" domainObjectName="StockIndex">
+            <property name="useActualColumnNames" value="false"/>
+        </table>
         <!--<table schema="" tableName="trans" domainObjectName="Trans">-->
             <!--<property name="useActualColumnNames" value="false"/>-->
             <!--<generatedKey column="id" sqlStatement="JDBC"/>-->

@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="org.kin.dao.StocksMapper" >
-  <resultMap id="BaseResultMap" type="org.kin.domain.Stocks" >
+<mapper namespace="org.kin.dao.StockIndexMapper" >
+  <resultMap id="BaseResultMap" type="org.kin.domain.StockIndex" >
     <id column="code" property="code" jdbcType="VARCHAR" />
-    <result column="market" property="market" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="market" property="market" jdbcType="VARCHAR" />
     <result column="pinyin" property="pinyin" jdbcType="VARCHAR" />
-    <result column="currcapital" property="currcapital" jdbcType="DECIMAL" />
-    <result column="totalcapital" property="totalcapital" jdbcType="DECIMAL" />
-    <result column="profit_four" property="profitFour" jdbcType="DECIMAL" />
-    <result column="mgjzc" property="mgjzc" jdbcType="DECIMAL" />
-    <result column="listing_date" property="listingDate" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -71,15 +66,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    code, market, name, pinyin, currcapital, totalcapital, profit_four, mgjzc, listing_date
+    code, name, market, pinyin
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.kin.domain.StocksExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.kin.domain.StockIndexExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from stocks
+    from stock_index
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -90,125 +85,76 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from stocks
+    from stock_index
     where code = #{code,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from stocks
+    delete from stock_index
     where code = #{code,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="org.kin.domain.StocksExample" >
-    delete from stocks
+  <delete id="deleteByExample" parameterType="org.kin.domain.StockIndexExample" >
+    delete from stock_index
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="org.kin.domain.Stocks" >
-    insert into stocks (code, market, name, 
-      pinyin, currcapital, totalcapital, 
-      profit_four, mgjzc, listing_date
-      )
-    values (#{code,jdbcType=VARCHAR}, #{market,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-      #{pinyin,jdbcType=VARCHAR}, #{currcapital,jdbcType=DECIMAL}, #{totalcapital,jdbcType=DECIMAL}, 
-      #{profitFour,jdbcType=DECIMAL}, #{mgjzc,jdbcType=DECIMAL}, #{listingDate,jdbcType=TIMESTAMP}
-      )
+  <insert id="insert" parameterType="org.kin.domain.StockIndex" >
+    insert into stock_index (code, name, market, 
+      pinyin)
+    values (#{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{market,jdbcType=VARCHAR}, 
+      #{pinyin,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="org.kin.domain.Stocks" >
-    insert into stocks
+  <insert id="insertSelective" parameterType="org.kin.domain.StockIndex" >
+    insert into stock_index
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="code != null" >
         code,
       </if>
-      <if test="market != null" >
-        market,
-      </if>
       <if test="name != null" >
         name,
       </if>
+      <if test="market != null" >
+        market,
+      </if>
       <if test="pinyin != null" >
         pinyin,
-      </if>
-      <if test="currcapital != null" >
-        currcapital,
-      </if>
-      <if test="totalcapital != null" >
-        totalcapital,
-      </if>
-      <if test="profitFour != null" >
-        profit_four,
-      </if>
-      <if test="mgjzc != null" >
-        mgjzc,
-      </if>
-      <if test="listingDate != null" >
-        listing_date,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="code != null" >
         #{code,jdbcType=VARCHAR},
       </if>
-      <if test="market != null" >
-        #{market,jdbcType=VARCHAR},
-      </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="market != null" >
+        #{market,jdbcType=VARCHAR},
       </if>
       <if test="pinyin != null" >
         #{pinyin,jdbcType=VARCHAR},
       </if>
-      <if test="currcapital != null" >
-        #{currcapital,jdbcType=DECIMAL},
-      </if>
-      <if test="totalcapital != null" >
-        #{totalcapital,jdbcType=DECIMAL},
-      </if>
-      <if test="profitFour != null" >
-        #{profitFour,jdbcType=DECIMAL},
-      </if>
-      <if test="mgjzc != null" >
-        #{mgjzc,jdbcType=DECIMAL},
-      </if>
-      <if test="listingDate != null" >
-        #{listingDate,jdbcType=TIMESTAMP},
-      </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="org.kin.domain.StocksExample" resultType="java.lang.Integer" >
-    select count(*) from stocks
+  <select id="countByExample" parameterType="org.kin.domain.StockIndexExample" resultType="java.lang.Integer" >
+    select count(*) from stock_index
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update stocks
+    update stock_index
     <set >
       <if test="record.code != null" >
         code = #{record.code,jdbcType=VARCHAR},
       </if>
-      <if test="record.market != null" >
-        market = #{record.market,jdbcType=VARCHAR},
-      </if>
       <if test="record.name != null" >
         name = #{record.name,jdbcType=VARCHAR},
       </if>
+      <if test="record.market != null" >
+        market = #{record.market,jdbcType=VARCHAR},
+      </if>
       <if test="record.pinyin != null" >
         pinyin = #{record.pinyin,jdbcType=VARCHAR},
-      </if>
-      <if test="record.currcapital != null" >
-        currcapital = #{record.currcapital,jdbcType=DECIMAL},
-      </if>
-      <if test="record.totalcapital != null" >
-        totalcapital = #{record.totalcapital,jdbcType=DECIMAL},
-      </if>
-      <if test="record.profitFour != null" >
-        profit_four = #{record.profitFour,jdbcType=DECIMAL},
-      </if>
-      <if test="record.mgjzc != null" >
-        mgjzc = #{record.mgjzc,jdbcType=DECIMAL},
-      </if>
-      <if test="record.listingDate != null" >
-        listing_date = #{record.listingDate,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -216,60 +162,35 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update stocks
+    update stock_index
     set code = #{record.code,jdbcType=VARCHAR},
-      market = #{record.market,jdbcType=VARCHAR},
       name = #{record.name,jdbcType=VARCHAR},
-      pinyin = #{record.pinyin,jdbcType=VARCHAR},
-      currcapital = #{record.currcapital,jdbcType=DECIMAL},
-      totalcapital = #{record.totalcapital,jdbcType=DECIMAL},
-      profit_four = #{record.profitFour,jdbcType=DECIMAL},
-      mgjzc = #{record.mgjzc,jdbcType=DECIMAL},
-      listing_date = #{record.listingDate,jdbcType=TIMESTAMP}
+      market = #{record.market,jdbcType=VARCHAR},
+      pinyin = #{record.pinyin,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="org.kin.domain.Stocks" >
-    update stocks
+  <update id="updateByPrimaryKeySelective" parameterType="org.kin.domain.StockIndex" >
+    update stock_index
     <set >
-      <if test="market != null" >
-        market = #{market,jdbcType=VARCHAR},
-      </if>
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="market != null" >
+        market = #{market,jdbcType=VARCHAR},
       </if>
       <if test="pinyin != null" >
         pinyin = #{pinyin,jdbcType=VARCHAR},
       </if>
-      <if test="currcapital != null" >
-        currcapital = #{currcapital,jdbcType=DECIMAL},
-      </if>
-      <if test="totalcapital != null" >
-        totalcapital = #{totalcapital,jdbcType=DECIMAL},
-      </if>
-      <if test="profitFour != null" >
-        profit_four = #{profitFour,jdbcType=DECIMAL},
-      </if>
-      <if test="mgjzc != null" >
-        mgjzc = #{mgjzc,jdbcType=DECIMAL},
-      </if>
-      <if test="listingDate != null" >
-        listing_date = #{listingDate,jdbcType=TIMESTAMP},
-      </if>
     </set>
     where code = #{code,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="org.kin.domain.Stocks" >
-    update stocks
-    set market = #{market,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
-      pinyin = #{pinyin,jdbcType=VARCHAR},
-      currcapital = #{currcapital,jdbcType=DECIMAL},
-      totalcapital = #{totalcapital,jdbcType=DECIMAL},
-      profit_four = #{profitFour,jdbcType=DECIMAL},
-      mgjzc = #{mgjzc,jdbcType=DECIMAL},
-      listing_date = #{listingDate,jdbcType=TIMESTAMP}
+  <update id="updateByPrimaryKey" parameterType="org.kin.domain.StockIndex" >
+    update stock_index
+    set name = #{name,jdbcType=VARCHAR},
+      market = #{market,jdbcType=VARCHAR},
+      pinyin = #{pinyin,jdbcType=VARCHAR}
     where code = #{code,jdbcType=VARCHAR}
   </update>
 </mapper>
