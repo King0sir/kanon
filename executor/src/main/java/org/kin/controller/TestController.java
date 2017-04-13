@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TestController {
 
-    @RequestMapping("/")
+    @RequestMapping("/index")
     public String index(){
         return "Kanon is running";
     }
