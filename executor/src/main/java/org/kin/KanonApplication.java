@@ -13,15 +13,13 @@ import javax.annotation.Resource;
 @SpringBootApplication
 public class KanonApplication {
 
-    @Resource
-    private static StocksMapper mapper;
     public static void main(String[] args) {
         SpringApplication.run(KanonApplication.class,args);
         System.out.println("application kanon start!");
 
-        StocksExample example = new StocksExample();
-        StocksExample.Criteria criteria = example.createCriteria();
-        criteria.andNameEqualTo("abcv").andMarketNotLike("laksdjfklajsd");
-        mapper.selectByExample(example);
+//        StocksExample example = new StocksExample();
+//        StocksExample.Criteria criteria = example.createCriteria();
+//        criteria.andNameEqualTo("abcv").andMarketNotLike("laksdjfklajsd");
+//        mapper.selectByExample(example);
     }
 }
