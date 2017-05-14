@@ -1,6 +1,6 @@
 package org.kin.controller;
 
-import org.kin.service.stocks.RemoteService;
+import org.kin.service.impl.stocks.RemoteService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

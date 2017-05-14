@@ -22,6 +22,21 @@ public class Stocks {
 
     private Date listingDate;
 
+    public Stocks() {
+    }
+
+    public Stocks(String code, String market, String name, String pinyin, BigDecimal currcapital, BigDecimal totalcapital, BigDecimal profitFour, BigDecimal mgjzc, Date listingDate) {
+        this.code = code;
+        this.market = market;
+        this.name = name;
+        this.pinyin = pinyin;
+        this.currcapital = currcapital;
+        this.totalcapital = totalcapital;
+        this.profitFour = profitFour;
+        this.mgjzc = mgjzc;
+        this.listingDate = listingDate;
+    }
+
     public String getCode() {
         return code;
     }

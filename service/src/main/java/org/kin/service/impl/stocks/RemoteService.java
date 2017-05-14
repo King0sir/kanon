@@ -1,4 +1,4 @@
-package org.kin.service.stocks;
+package org.kin.service.impl.stocks;
 
 import com.alibaba.cloudapi.sdk.core.model.ApiResponse;
 import com.alibaba.fastjson.JSONObject;
@@ -22,12 +22,12 @@ public class RemoteService {
         this.stockClient = StockServiceFactory.createStockService();
     }
 
-    public StockListPo getStockList() {
-        ApiResponse response = stockClient.stockList(StockMarket.ShangHai, 1);
+    public StockListPo getStockList(StockMarket stockMarket, Integer page) {
+        ApiResponse response = stockClient.stockList(stockMarket, page);
         try {
             String body = new String(response.getBody(), "utf-8");
 
-            StockListPo stockList = JSONObject.parseObject(body,StockListPo.class);
+            StockListPo stockList = JSONObject.parseObject(body, StockListPo.class);
             return stockList;
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
