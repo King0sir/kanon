@@ -34,11 +34,18 @@ public class SavingImpl implements ISavingService {
         while (page <= allPage) {
             StockListPo stockList = remoteService.getStockList(StockMarket.ShangHai, page);
             if (stockList.getShowapi_res_code() != 0) {
+                logger.error(stockList.getShowapi_res_error());
                 return;
             }
             allPage = stockList.getShowapi_res_body().getAllPages();
             stockList.getShowapi_res_body().getContentlist().forEach(contentlistBean -> {
-                stocksMapper.insertSelective(StocksTransfer.transfer(contentlistBean));
+//                logger.debug("name:{"+contentlistBean.getName()+"},code:{"+contentlistBean.getCode()+"}");
+                logger.debug(contentlistBean.toString());
+                if (stocksMapper.selectByPrimaryKey(contentlistBean.getCode()) == null) {
+                    stocksMapper.insertSelective(StocksTransfer.transfer(contentlistBean));
+                } else {
+                    stocksMapper.updateByPrimaryKeySelective(StocksTransfer.transfer(contentlistBean));
+                }
             });
             page++;
         }

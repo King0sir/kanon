@@ -211,6 +211,23 @@ public class StockListPo implements Serializable{
             public void setStatus(String status) {
                 this.status = status;
             }
+
+            @Override
+            public String toString() {
+                return "ContentlistBean{" +
+                        "market='" + market + '\'' +
+                        ", name='" + name + '\'' +
+                        ", currcapital='" + currcapital + '\'' +
+                        ", state='" + state + '\'' +
+                        ", profit_four='" + profit_four + '\'' +
+                        ", code='" + code + '\'' +
+                        ", mgjzc='" + mgjzc + '\'' +
+                        ", totalcapital='" + totalcapital + '\'' +
+                        ", listing_date='" + listing_date + '\'' +
+                        ", pinyin='" + pinyin + '\'' +
+                        ", status='" + status + '\'' +
+                        '}';
+            }
         }
     }
 }
