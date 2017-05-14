@@ -1,5 +1,6 @@
 package org.kin;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -7,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * Created by kinakihiro on 2017/4/6.
  */
 @SpringBootApplication
+@MapperScan(basePackages = "org.kin.dao")
 public class KanonApplication {
 
     public static void main(String[] args) {
@@ -15,8 +17,4 @@ public class KanonApplication {
 
     }
 
-//        public static void main(String [] args) {
-//            System.exit(SpringApplication.exit(SpringApplication.run(
-//                    BatchConfiguration.class, args)));
-//        }
 }

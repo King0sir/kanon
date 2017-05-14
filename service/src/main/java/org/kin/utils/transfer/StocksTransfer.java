@@ -24,7 +24,7 @@ public class StocksTransfer {
                 new BigDecimal(bean.getTotalcapital()),
                 new BigDecimal(bean.getProfit_four()),
                 new BigDecimal(bean.getMgjzc()),
-                Date.from(LocalDate.parse("2017-02-12").atStartOfDay().atZone(ZoneId.of("Asia/Shanghai")).toInstant())
+                Date.from(LocalDate.parse(bean.getListing_date()).atStartOfDay().atZone(ZoneId.of("Asia/Shanghai")).toInstant())
         );
     }
 }
