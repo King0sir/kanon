@@ -1,11 +1,7 @@
 package org.kin;
 
-import org.kin.dao.StocksMapper;
-import org.kin.domain.StocksExample;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import javax.annotation.Resource;
 
 /**
  * Created by kinakihiro on 2017/4/6.
@@ -18,4 +14,9 @@ public class KanonApplication {
         System.out.println("application kanon start!");
 
     }
+
+//        public static void main(String [] args) {
+//            System.exit(SpringApplication.exit(SpringApplication.run(
+//                    BatchConfiguration.class, args)));
+//        }
 }

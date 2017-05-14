@@ -12,11 +12,11 @@
     <artifactId>kanon-dao</artifactId>
 
     <dependencies>
-        <dependency>
-            <groupId>org.kin</groupId>
-            <artifactId>kanon-service</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.kin</groupId>-->
+            <!--<artifactId>kanon-service</artifactId>-->
+            <!--<version>0.0.1-SNAPSHOT</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
@@ -46,7 +46,7 @@
                 <!--<groupId>org.springframework.boot</groupId>-->
                 <!--<artifactId>spring-boot-maven-plugin</artifactId>-->
             <!--</plugin>-->
-            <!--&lt;!&ndash;-->
+            <!--
             <plugin>
                 <groupId>org.mybatis.generator</groupId>
                 <artifactId>mybatis-generator-maven-plugin</artifactId>
@@ -81,7 +81,7 @@
                     </dependency>
                 </dependencies>
             </plugin>
-            <!--&ndash;&gt;-->
+            -->
         </plugins>
     </build>
 </project>
