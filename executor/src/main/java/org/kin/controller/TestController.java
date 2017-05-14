@@ -1,5 +1,6 @@
 package org.kin.controller;
 
+import org.kin.service.ISavingService;
 import org.kin.service.impl.stocks.RemoteService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,7 +14,7 @@ import javax.annotation.Resource;
 public class TestController {
 
     @Resource
-    private RemoteService remoteService;
+    private ISavingService savingService;
 
     @RequestMapping("/index")
     public String index(){
@@ -22,7 +23,7 @@ public class TestController {
 
     @RequestMapping("/list")
     public String get(){
-        remoteService.getStockList();
+        savingService.savingStocks();
         return "ok";
     }
 }
