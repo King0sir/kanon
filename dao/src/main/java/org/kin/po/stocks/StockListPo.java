@@ -42,6 +42,15 @@ public class StockListPo implements Serializable{
         this.showapi_res_body = showapi_res_body;
     }
 
+    @Override
+    public String toString() {
+        return "StockListPo{" +
+                "showapi_res_code=" + showapi_res_code +
+                ", showapi_res_error='" + showapi_res_error + '\'' +
+                ", showapi_res_body=" + showapi_res_body +
+                '}';
+    }
+
     public static class ShowapiResBodyBean {
         /**
          * allPages : 27
@@ -95,6 +104,17 @@ public class StockListPo implements Serializable{
 
         public void setContentlist(List<ContentlistBean> contentlist) {
             this.contentlist = contentlist;
+        }
+
+        @Override
+        public String toString() {
+            return "ShowapiResBodyBean{" +
+                    "allPages=" + allPages +
+                    ", currentPage=" + currentPage +
+                    ", allNum=" + allNum +
+                    ", maxResult=" + maxResult +
+                    ", contentlist=" + contentlist +
+                    '}';
         }
 
         public static class ContentlistBean {

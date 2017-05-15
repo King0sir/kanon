@@ -39,12 +39,15 @@ public class SavingImpl implements ISavingService {
             }
             allPage = stockList.getShowapi_res_body().getAllPages();
             stockList.getShowapi_res_body().getContentlist().forEach(contentlistBean -> {
-//                logger.debug("name:{"+contentlistBean.getName()+"},code:{"+contentlistBean.getCode()+"}");
-                logger.debug(contentlistBean.toString());
-                if (stocksMapper.selectByPrimaryKey(contentlistBean.getCode()) == null) {
-                    stocksMapper.insertSelective(StocksTransfer.transfer(contentlistBean));
-                } else {
-                    stocksMapper.updateByPrimaryKeySelective(StocksTransfer.transfer(contentlistBean));
+                try {
+                    logger.info(contentlistBean.toString());
+                    if (stocksMapper.selectByPrimaryKey(contentlistBean.getCode()) == null) {
+                        stocksMapper.insertSelective(StocksTransfer.transfer(contentlistBean));
+                    } else {
+                        stocksMapper.updateByPrimaryKeySelective(StocksTransfer.transfer(contentlistBean));
+                    }
+                } catch (Exception e) {
+                    logger.error("插入数据出现异常", e);
                 }
             });
             page++;
